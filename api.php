@@ -1,8 +1,57 @@
 <?php
-
+    
+    ini_set("display_errors",1);
+    ini_set("error_reporting",E_ALL);
+    
+    define("DOCUMENT_ROOT", $_SERVER["DOCUMENT_ROOT"]."/php_class/");
+    
+    require_once DOCUMENT_ROOT."data/database.php";
+    
+    require_once DOCUMENT_ROOT."data/authentication.php";
+    
+    
+    $_POST["request"] = "register";
+    $_POST["user"] = "as";
+    $_POST["password"]= "qwerty2";
+    
+    
+    /*Using $_GET will show up inside the url,
+        will change to $_POST to keep it hidden
+    */
     //What are we requesting
-    $request = $_GET["request"];
+    $request = $_POST["request"];
+    
+    $response = "The request was unhandled";
 
+    switch($request)
+    {
+        case "register";
+            
+            $response = register($_POST["user"], $_POST["password"]);
+            
+            break;
+        
+        case "get_id";
+            echo "bye";
+            break;
+        
+        default:
+            echo "neither";
+            break;
+        
+    }
+    
+    if($response === true)
+    {
+        $response = "Success";
+    }
+    echo "<h1>".$response."</h1>";
+    
+    
+    
+    /*
+    Old Code from previous day, stuff to deal with request
+    
     $names = array("Dustin"=>"Kinsey",
                    "Troy"=>"Lewis",
                    "Ian"=>"Kinsey");
@@ -21,5 +70,7 @@
     else{
         echo "<h1>UHOH You messed up</h1>";
     }
+    
+    */
 
 ?>

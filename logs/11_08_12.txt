@@ -1,0 +1,1 @@
+November 8, 2012 | 8:53:16: | MySQL Error: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'TABLE users (username, password) VALUES ('troy', 'qwerty')' at line 1
