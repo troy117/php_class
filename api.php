@@ -10,8 +10,8 @@
     require_once DOCUMENT_ROOT."data/authentication.php";
     
     
-    $_POST["request"] = "register";
-    $_POST["user"] = "NewUser2";
+    $_POST["request"] = "login";
+    $_POST["user"] = "NewUser22";
     $_POST["password"]= "blarg";
     
     
@@ -33,6 +33,11 @@
         
         case "get_id";
             echo "bye";
+            break;
+        
+        case "login";
+            
+            $response = login($_POST["user"], $_POST["password"]);
             break;
         
         default:

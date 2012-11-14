@@ -4,6 +4,7 @@
     require_once DOCUMENT_ROOT . "utils/Connections.php";
 
     define("SALT_LENGTH",10);
+    define("SERVER_ERROR_MESSAGE","We're having technical difficulties, please try again.");
     
 
     /**
@@ -17,9 +18,11 @@
      */
     function register($_user,$_pass)
     {
-        $_user = mysqli_real_escape_string(Connections::$MYSQL, $_user);
-        $_pass = mysqli_real_escape_string(Connections::$MYSQL, $_pass);
+        //clean the input
+        $_user = clean($_user);
+        $_pass = clean($_pass);
         
+        //trim the user and pass
         $_user = trim($_user);
         $_pass = trim($_pass);
         
@@ -66,11 +69,44 @@
                     return "That username was already taken";
                 }
             }
-            return "We're having technical difficulties, please try again.";
+            return SERVER_ERROR_MESSAGE;
         }
         
         echo $query;
     }//End Register Function
+    
+    function login($_username,$_password)
+    {
+        $_username = clean($_username);
+        
+        $query = sprintf("SELECT password FROM users WHERE username = '%s'",$_username);
+            $result = query($query);
+        
+        if($result)
+        {
+            $row = mysqli_fetch_assoc($result);
+            
+            if($row)
+            {
+                if(check_password_hash($_password,$row["password"]))
+                {
+                    return true;
+                }
+                else
+                {
+                    return "The password is incorrect";
+                }
+            }
+            else
+            {
+                return "The given user does not exist";
+            }
+        }
+        
+        return SERVER_ERROR_MESSAGE;
+    }
+    
+    
     /**
      * Hashes the password.
      *
@@ -98,7 +134,7 @@
         return $hash;
     }
     
-    function check_password($_plain_text,$_hash)
+    function check_password_hash($_plain_text,$_hash)
     {
         $salt = extract_salt_from_hash($_hash);
         return(hash_password($_plain_text, $salt)== $_hash);
