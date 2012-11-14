@@ -11,8 +11,8 @@
     
     
     $_POST["request"] = "register";
-    $_POST["user"] = "as";
-    $_POST["password"]= "qwerty2";
+    $_POST["user"] = "NewUser2";
+    $_POST["password"]= "blarg";
     
     
     /*Using $_GET will show up inside the url,

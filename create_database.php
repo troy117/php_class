@@ -26,7 +26,7 @@
     $query = sprintf("CREATE TABLE IF NOT EXISTS %s (".
                      "user_id INT(10) UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY, ".
                      "username VARCHAR(250) NOT NULL, ".
-                     "password VARCHAR(50) NOT NULL, ".
+                     "password VARCHAR(128) NOT NULL, ".
                      "INDEX (username))", $table);
         
         
